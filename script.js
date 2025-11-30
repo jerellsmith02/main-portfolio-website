@@ -37,15 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // toggles
   openBtn.addEventListener('click', () => {
-    const box = document.getElementById('chat-box');
-    if (box) box.classList.toggle('hidden');
+    if (chatBox) chatBox.classList.toggle('hidden');
     const exp = openBtn.getAttribute('aria-expanded') === 'true';
     openBtn.setAttribute('aria-expanded', String(!exp));
   });
 
   document.querySelectorAll('.chat-close').forEach(b => b.addEventListener('click', () => {
-    const box = document.getElementById('chat-box');
-    if (box) box.classList.add('hidden');
+    if (chatBox) chatBox.classList.add('hidden');
   }));
 
   // FAQ answers
@@ -54,7 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
     { keys: ['availability','available','hiring','hire'], answer: "I'm open to internships and early-career roles. Email jerellsmith02@gmail.com to discuss." },
     { keys: ['projects','github','repos'], answer: "See the Projects section for summaries. Message me and I will share repo links." },
     { keys: ['education','school','degree'], answer: "B.S. Computer Technology, Bowie State University (Expected May 2026)." },
-    { keys: ['certification','ccna','mta'], answer: "I hold MTA and foundational Cisco certifications and am pursuing further credentials." }
+    { keys: ['certification','ccna','mta'], answer: "I hold MTA and foundational Cisco certifications and am pursuing further credentials." }{ keys: ['contact','email','phone'], answer: "You can email me at jerellsmith02@gmail.com or call at (240) 353-4873." },
+  { keys: ['resume','cv'], answer: "You can view or download my resume in the Resume section." },
+  { keys: ['linkedin','profile','network'], answer: "Check out my LinkedIn profile at http://www.linkedin.com/in/jerell-smith." },
+  { keys: ['projects details','project','example project'], answer: "I have projects including an Ransomware Detection ML Model, LDAP server setup, and RHEL 8 Kickstart automation." },
+  { keys: ['hobbies','interests','outside'], answer: "I enjoy exploring computer hardware, assembling/disassembling systems, and learning about cybersecurity and automation." },
+  { keys: ['languages','coding','programming'], answer: "I code in Python, Bash, and JavaScript, with experience in automation scripts, ML projects, and Linux administration." },
+  { keys: ['portfolio','website','this site'], answer: "You can explore my portfolio here, including projects, resume, and contact options." },
+  { keys: ['linkedin help','how to connect'], answer: "You can connect via LinkedIn or send me an email to start a conversation." },
+  { keys: ['questions about me','about you'], answer: "I'm Jerell Smith, a Computer Technology student passionate about networks, Linux, automation, and cybersecurity." }
   ];
 
   function postMessage(text, cls='bot-message') {
@@ -75,12 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return null;
   }
 
-  const chatFormEl = document.getElementById('chat-form');
-  if (chatFormEl) {
-    chatFormEl.addEventListener('submit', (ev) => {
+  if (chatForm) {
+    chatForm.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      const input = document.getElementById('chat-input');
-      const txt = input.value.trim();
+      const txt = chatInput.value.trim();
       if (!txt) return;
       postMessage(txt, 'user-message');
       const ans = findAnswer(txt);
@@ -88,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (ans) postMessage(ans);
         else postMessage("I'm still learning — please email me at jerellsmith02@gmail.com.");
       }, 350);
-      input.value = '';
+      chatInput.value = '';
     });
   }
 
